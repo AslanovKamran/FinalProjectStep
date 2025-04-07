@@ -18,9 +18,9 @@ public class MoviesController : ControllerBase
 
     [HttpGet]
     [Route(ApiEndPoints.Movies.GetAll)]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] GetAllMoviesRequest request, CancellationToken)
     {
-        var movies = await _service.GetAllAsync();
+        var movies = await _service.GetAllAsync(request);
         var response = movies.MapToResponse();
 
 
@@ -57,11 +57,11 @@ public class MoviesController : ControllerBase
 
     [HttpPost]
     [Route(ApiEndPoints.Movies.Create)]
-    public async Task<IActionResult> Create([FromBody] CreateMovieRequest request)
+    public async Task<IActionResult> Create([FromBody] CreateMovieRequest request, CancellationToken cancellationToken)
     {
         var movie = request.MapToMovie();
 
-        var success = await _service.CreateAsync(movie);
+        var success = await _service.CreateAsync(movie, cancellationToken);
 
         if (!success)
             return BadRequest();

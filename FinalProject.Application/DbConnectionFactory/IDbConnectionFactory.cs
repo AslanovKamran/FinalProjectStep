@@ -5,7 +5,7 @@ namespace FinalProject.Application.DbConnectionFactory;
 
 public interface IDbConnectionFactory
 {
-    Task<IDbConnection> CreateConnectionAsync();
+    Task<IDbConnection> CreateConnectionAsync(CancellationToken cancellationToken = default);
 }
 
 public class MsSqlConnectionFactory : IDbConnectionFactory
@@ -13,10 +13,10 @@ public class MsSqlConnectionFactory : IDbConnectionFactory
     private readonly string _connectionString;
     public MsSqlConnectionFactory(string connectionString) => _connectionString = connectionString;
 
-    public async Task<IDbConnection> CreateConnectionAsync()
+    public async Task<IDbConnection> CreateConnectionAsync(CancellationToken cancellationToken = default)
     {
         var connection = new SqlConnection(_connectionString);
-        await connection.OpenAsync();
+        await connection.OpenAsync(cancellationToken = default);
         return connection;
     }
 }

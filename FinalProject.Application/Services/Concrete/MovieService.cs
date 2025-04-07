@@ -1,6 +1,7 @@
 ﻿using FinalProject.Application.Models;
 using FinalProject.Application.Repository.Abstract;
 using FinalProject.Application.Services.Abstract;
+using FinalProject.Contracts.Requests;
 using FluentValidation;
 using System.Runtime.CompilerServices;
 
@@ -17,9 +18,9 @@ public class MovieService : IMovieService
         _validator = validator;
     }
 
-    public async Task<IEnumerable<Movie>> GetAllAsync()
+    public async Task<IEnumerable<Movie>> GetAllAsync(GetAllMoviesRequest request)
     {
-        var movies = await _repos.GetAllAsync();
+        var movies = await _repos.GetAllAsync(request);
         return movies;
     }
 
@@ -30,11 +31,11 @@ public class MovieService : IMovieService
 
         return movie;
     }
-    public async Task<bool> CreateAsync(Movie movie)
+    public async Task<bool> CreateAsync(Movie movie, CancellationToken cancellationToken)
     {
-        await _validator.ValidateAndThrowAsync(movie);
+        await _validator.ValidateAndThrowAsync(movie,cancellationToken);
 
-        var success = await _repos.CreateAsync(movie);
+        var success = await _repos.CreateAsync(movie,cancellationToken);
         return success;
     }
 
