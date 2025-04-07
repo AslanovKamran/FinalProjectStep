@@ -1,0 +1,43 @@
+GO
+USE master
+
+GO 
+CREATE DATABASE MoviesDb
+
+GO
+USE MoviesDb
+
+GO
+CREATE TABLE Movies(
+[Id] UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+[Title] NVARCHAR(100) NOT NULL,
+[YearOfRelease] INT NOT NULL
+)
+
+GO
+INSERT INTO Movies (Title, YearOfRelease) VALUES (N'Avatar', 2012)
+INSERT INTO Movies (Title, YearOfRelease) VALUES (N'Terminator 2', 2006)
+
+
+GO
+CREATE PROC GetAllMovies
+AS
+BEGIN
+SELECT * FROM Movies
+END
+
+
+GO
+CREATE PROC GetMovieById @Id UNIQUEIDENTIFIER
+AS
+BEGIN
+SELECT * FROM Movies WHERE Id = @Id
+END
+
+GO
+CREATE PROC CreateMovie @Id UNIQUEIDENTIFIER, @Title NVARCHAR(100), @YearOfRelease INT
+AS
+BEGIN
+INSERT INTO Movies (Id, Title, YearOfRelease) VALUES (@Id, @Title, @YearOfRelease)
+END
+

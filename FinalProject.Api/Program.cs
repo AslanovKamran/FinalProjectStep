@@ -1,6 +1,4 @@
-using FinalProject.Application.DbConnectionFactory;
-using FinalProject.Application.Repository.Abstract;
-using FinalProject.Application.Repository.Concrete;
+using FinalProject.Api.Mapping;
 using FinalProject.Application.ServiceCollectionExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,9 +25,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseMiddleware<ValidationMappingMiddleware>();
 app.MapControllers();
 
 app.Run();

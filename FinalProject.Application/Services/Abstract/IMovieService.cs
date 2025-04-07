@@ -1,15 +1,12 @@
 ﻿using FinalProject.Application.Models;
 
-namespace FinalProject.Application.Repository.Abstract;
+namespace FinalProject.Application.Services.Abstract;
 
-public interface IMovieRepository
+public interface IMovieService
 {
     Task<Movie?> GetByIdAsync(Guid id);
     Task<IEnumerable<Movie>> GetAllAsync();
-
     Task<bool> CreateAsync(Movie movie);
-    Task<bool> UpdateAsync(Movie movie);
+    Task<Movie> UpdateAsync(Movie movie);
     Task<bool> DeleteByIdAsync(Guid id);
-    Task<bool> DoesExist(Guid id);
 }
-
